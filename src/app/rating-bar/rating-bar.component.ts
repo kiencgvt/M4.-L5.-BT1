@@ -9,12 +9,12 @@ import {IRatingUnit} from "../irating-unit";
 export class RatingBarComponent implements OnInit {
   rating: IRatingUnit[] = [];
 
-  @Input() ratingCount: number = 0;
+  @Input() max: number = 0;
 
   constructor() { }
 
   ngOnInit(): void {
-    for (let i = 0; i < this.ratingCount; i++) {
+    for (let i = 0; i < this.max; i++) {
       this.rating.push({value: i + 1, active: false});
     }
   }
@@ -28,12 +28,16 @@ export class RatingBarComponent implements OnInit {
     }
     return count;
   }
+
   countRating(index: number) {
-    for (let i = 0; i < this.ratingCount; i++) {
-      this.rating[i].active = false;
+    for (let i = 0; i < this.max; i++) {
+      this.rating[i].active = i <= index;
     }
-    for (let i = 0; i <= index; i++) {
-      this.rating[i].active = true;
+  }
+
+  deleteRating() {
+    for (let i = 0; i < this.max; i++) {
+      this.rating[i].active = false;
     }
   }
 }
